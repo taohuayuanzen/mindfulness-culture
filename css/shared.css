@@ -1,0 +1,239 @@
+/* ══════════════════════════════════════════
+   Design Tokens
+   ══════════════════════════════════════════ */
+:root {
+  /* Color — warm earth palette with sage accent */
+  --bg:        oklch(97% 0.005 75);
+  --bg-deep:   oklch(94% 0.008 75);
+  --fg:        oklch(22% 0.015 60);
+  --fg-muted:  oklch(48% 0.012 60);
+  --fg-faint:  oklch(72% 0.008 75);
+  --accent:    oklch(52% 0.06 155);
+  --accent-light: oklch(88% 0.04 155);
+  --accent-deep:  oklch(35% 0.07 155);
+  --warm:      oklch(72% 0.04 55);
+  --warm-light: oklch(92% 0.025 55);
+  --line:      oklch(85% 0.01 75);
+
+  /* Typography */
+  --font-display: 'Newsreader', 'Noto Serif SC', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', 'Noto Serif SC', system-ui, sans-serif;
+  --font-serif:   'Noto Serif SC', 'Newsreader', Georgia, serif;
+
+  /* Spacing — 4pt base */
+  --s1: 0.25rem;  --s2: 0.5rem;  --s3: 0.75rem;  --s4: 1rem;
+  --s5: 1.25rem;  --s6: 1.5rem;  --s8: 2rem;     --s10: 2.5rem;
+  --s12: 3rem;    --s16: 4rem;   --s20: 5rem;     --s24: 6rem;
+  --s32: 8rem;    --s40: 10rem;
+
+  /* Sizing */
+  --max-w: 72rem;
+  --max-w-narrow: 42rem;
+  --max-w-wide: 90rem;
+}
+
+/* ══════════════════════════════════════════
+   Reset & Base
+   ══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--fg);
+  background: var(--bg);
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+::selection {
+  background: var(--accent-light);
+  color: var(--accent-deep);
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ══════════════════════════════════════════
+   Utility
+   ══════════════════════════════════════════ */
+.container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--s8);
+}
+
+.container--narrow {
+  max-width: var(--max-w-narrow);
+}
+
+.section-label {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--s6);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1.2;
+  color: var(--fg);
+  margin-bottom: var(--s6);
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--fg-muted);
+  max-width: 50ch;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* ══════════════════════════════════════════
+   Navigation
+   ══════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: var(--s6) 0;
+  background: oklch(97% 0.005 75 / 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid oklch(90% 0.005 75 / 0.5);
+  transition: transform 0.4s ease;
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--s8);
+}
+
+.nav__logo {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border-bottom: none;
+}
+
+.nav__logo span {
+  color: var(--accent);
+}
+
+.nav__links {
+  display: flex;
+  gap: var(--s8);
+  list-style: none;
+}
+
+.nav__links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--fg-muted);
+  border-bottom: none;
+  letter-spacing: 0.03em;
+  transition: color 0.3s;
+}
+
+.nav__links a:hover {
+  color: var(--fg);
+}
+
+.nav__links a.active {
+  color: var(--fg);
+}
+
+/* ══════════════════════════════════════════
+   Footer
+   ══════════════════════════════════════════ */
+.footer {
+  padding: var(--s10) 0;
+  background: var(--fg);
+  color: var(--fg-faint);
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 300;
+  border-top: 1px solid oklch(30% 0.01 60);
+}
+
+.footer a {
+  color: var(--fg-faint);
+  border-bottom: none;
+}
+
+.footer a:hover {
+  color: var(--warm);
+}
+
+/* ══════════════════════════════════════════
+   Scroll Reveal Animation
+   ══════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════
+   Keyframes
+   ══════════════════════════════════════════ */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.12; }
+  50% { transform: scale(1.15); opacity: 0.2; }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; height: 40px; }
+  50% { opacity: 0.8; height: 55px; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════════
+   Link — no underline variant
+   ══════════════════════════════════════════ */
+.link-plain {
+  text-decoration: none;
+  border-bottom: none;
+}
+
+/* ══════════════════════════════════════════
+   Responsive — shared
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .nav__links { display: none; }
+}
