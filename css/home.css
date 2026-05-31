@@ -378,16 +378,31 @@
   overflow: hidden;
 }
 
-/* Zen enso circle inside featured */
-.story-card--featured .story-card__visual::after {
-  content: '';
-  width: 140px;
-  height: 140px;
-  border: 3px solid var(--accent);
-  border-radius: 50%;
-  opacity: 0.5;
-  border-right-color: transparent;
-  transform: rotate(-30deg);
+.story-card__buddha {
+  width: min(68%, 220px);
+  height: auto;
+  color: var(--accent);
+  opacity: 0.58;
+}
+
+.story-card__buddha-halo,
+.story-card__buddha-line {
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.story-card__buddha-halo {
+  opacity: 0.42;
+}
+
+.story-card__buddha-halo--outer {
+  opacity: 0.2;
+}
+
+.story-card__buddha-line {
+  opacity: 0.9;
 }
 
 /* ══════════════════════════════════════════
@@ -580,6 +595,10 @@
 
   .story-card--featured .story-card__visual {
     min-height: 180px;
+  }
+
+  .story-card__buddha {
+    width: min(58%, 170px);
   }
 
   .figure-item {
