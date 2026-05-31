@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>正念导师 · 传记</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   Design Tokens (与首页一致)
+   ══════════════════════════════════════════ */
+:root {
+  --bg:        oklch(97% 0.005 75);
+  --bg-deep:   oklch(94% 0.008 75);
+  --fg:        oklch(22% 0.015 60);
+  --fg-muted:  oklch(48% 0.012 60);
+  --fg-faint:  oklch(72% 0.008 75);
+  --accent:    oklch(52% 0.06 155);
+  --accent-light: oklch(88% 0.04 155);
+  --accent-deep:  oklch(35% 0.07 155);
+  --warm:      oklch(72% 0.04 55);
+  --warm-light: oklch(92% 0.025 55);
+  --line:      oklch(85% 0.01 75);
+
+  --font-display: 'Newsreader', 'Noto Serif SC', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', 'Noto Serif SC', system-ui, sans-serif;
+  --font-serif:   'Noto Serif SC', 'Newsreader', Georgia, serif;
+
+  --s1: 0.25rem;  --s2: 0.5rem;  --s3: 0.75rem;  --s4: 1rem;
+  --s5: 1.25rem;  --s6: 1.5rem;  --s8: 2rem;     --s10: 2.5rem;
+  --s12: 3rem;    --s16: 4rem;   --s20: 5rem;     --s24: 6rem;
+  --s32: 8rem;
+
+  --max-w: 72rem;
+  --max-w-narrow: 42rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--fg);
+  background: var(--bg);
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+::selection { background: var(--accent-light); color: var(--accent-deep); }
+
+a {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+a:hover { color: var(--accent); border-color: var(--accent); }
+
+/* ══════════════════════════════════════════
+   Navigation
+   ══════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: var(--s6) 0;
+  background: oklch(97% 0.005 75 / 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid oklch(90% 0.005 75 / 0.5);
+  transition: transform 0.4s ease;
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--s8);
+}
+
+.nav__logo {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border-bottom: none;
+}
+.nav__logo span { color: var(--accent); }
+
+.nav__links {
+  display: flex;
+  gap: var(--s8);
+  list-style: none;
+}
+.nav__links a {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--fg-muted);
+  border-bottom: none;
+  letter-spacing: 0.03em;
+  transition: color 0.3s;
+}
+.nav__links a:hover { color: var(--fg); }
+.nav__links a.active { color: var(--fg); }
+
+
+/* ══════════════════════════════════════════
+   Biography Detail (detail view)
+   ══════════════════════════════════════════ */
+.bio-view {
+  padding-top: 100px;
+  padding-bottom: var(--s20);
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+.bio {
+  max-width: var(--max-w-narrow);
+  margin-inline: auto;
+  padding-inline: var(--s8);
+}
+
+/* Back button */
+.bio__back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  margin-bottom: var(--s10);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--fg-muted);
+  border-bottom: none;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.bio__back-btn:hover { color: var(--accent); }
+
+.bio__back-btn svg {
+  width: 16px; height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.bio__back-btn:hover svg { transform: translateX(-3px); }
+
+/* Bio Header */
+.bio__header {
+  display: flex;
+  align-items: center;
+  gap: var(--s6);
+  margin-bottom: var(--s12);
+}
+
+.bio__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--bg);
+  flex-shrink: 0;
+}
+
+.bio__avatar--1 { background: var(--accent); }
+.bio__avatar--2 { background: var(--warm); }
+.bio__avatar--3 { background: oklch(55% 0.06 280); }
+.bio__avatar--4 { background: oklch(55% 0.05 20); }
+.bio__avatar--5 { background: oklch(60% 0.06 180); }
+.bio__avatar--6 { background: oklch(50% 0.05 90); }
+
+.bio__identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s1);
+}
+
+.bio__name {
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.bio__subtitle {
+  font-size: 0.9rem;
+  color: var(--fg-muted);
+  font-weight: 300;
+}
+
+.bio__era-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--accent);
+  padding: var(--s1) var(--s3);
+  border: 1px solid var(--accent-light);
+  margin-top: var(--s1);
+}
+
+/* Bio Body */
+.bio__body {
+  font-size: 1rem;
+  line-height: 2;
+  color: var(--fg);
+  font-weight: 300;
+}
+
+.bio__body p {
+  margin-bottom: var(--s6);
+  text-indent: 2em;
+}
+
+.bio__body p:first-child {
+  text-indent: 0;
+}
+
+.bio__body p:first-child::first-letter {
+  font-family: var(--font-serif);
+  font-size: 3.2em;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.1em;
+  margin-top: 0.05em;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.bio__heading {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--fg);
+  margin-top: var(--s12);
+  margin-bottom: var(--s5);
+  padding-bottom: var(--s3);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+
+.bio__heading::before {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 48px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.bio__works {
+  list-style: none;
+  margin-top: var(--s5);
+  margin-bottom: var(--s8);
+}
+
+.bio__works li {
+  padding: var(--s3) 0;
+  padding-left: var(--s6);
+  position: relative;
+  font-size: 0.95rem;
+  color: var(--fg-muted);
+  line-height: 1.8;
+  border-bottom: 1px solid oklch(90% 0.005 75);
+}
+
+.bio__works li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  border: 1px solid var(--accent);
+}
+
+.bio__works li:last-child { border-bottom: none; }
+
+.bio__quote {
+  margin: var(--s8) 0;
+  padding: var(--s6) var(--s8);
+  border-left: 2px solid var(--accent);
+  background: oklch(95% 0.01 155 / 0.3);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--fg);
+}
+
+/* Nav between bios */
+.bio__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--s16);
+  padding-top: var(--s8);
+  border-top: 1px solid var(--line);
+}
+
+.bio__nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--fg-muted);
+  border-bottom: none;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.bio__nav-link:hover { color: var(--accent); }
+
+.bio__nav-link svg {
+  width: 16px; height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.bio__nav-link--prev:hover svg { transform: translateX(-3px); }
+.bio__nav-link--next:hover svg { transform: translateX(3px); }
+
+/* ══════════════════════════════════════════
+   Footer
+   ══════════════════════════════════════════ */
+.footer {
+  padding: var(--s10) 0;
+  background: var(--fg);
+  color: var(--fg-faint);
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 300;
+  border-top: 1px solid oklch(30% 0.01 60);
+}
+
+.footer a {
+  color: var(--fg-faint);
+  border-bottom: none;
+}
+.footer a:hover { color: var(--warm); }
+
+/* ══════════════════════════════════════════
+   View Transitions
+   ══════════════════════════════════════════ */
+.view { display: none; }
+.view.active {
+  display: block;
+  animation: fadeUp 0.5s ease-out;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .nav__links { display: none; }
+
+  .bio__header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .bio__body p:first-child::first-letter {
+    font-size: 2.8em;
+  }
+
+  .bio__nav {
+    flex-direction: column;
+    gap: var(--s4);
+    align-items: stretch;
+    text-align: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ Navigation ═══════════ -->
+<nav class="nav" role="navigation" aria-label="主导航">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="返回首页">正念<span>·</span>文化</a>
+    <ul class="nav__links">
+      <li><a href="index.html#timeline">前世今生</a></li>
+      <li><a href="index.html#stories">正念故事</a></li>
+      <li><a href="index.html#figures" class="active">正念导师</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+   VIEW: Detail (shown when hash matches)
+   ══════════════════════════════════════════ -->
+
+<!-- 1. 释迦牟尼 -->
+<div class="view" id="view-shakyamuni">
+  <div class="bio-view">
+    <div class="bio">
+      <a href="index.html#figures" class="bio__back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        返回正念导师
+      </a>
+      <div class="bio__header">
+        <div class="bio__avatar bio__avatar--1">悉</div>
+        <div class="bio__identity">
+          <h1 class="bio__name">释迦牟尼</h1>
+          <p class="bio__subtitle">正念的起源者 · 四念处体系创立者</p>
+          <span class="bio__era-badge">约公元前 563 — 前 483</span>
+        </div>
+      </div>
+      <div class="bio__body">
+        <p>释迦牟尼，原名悉达多·乔达摩，出生于古印度迦毗罗卫城（今尼泊尔境内），是释迦族净饭王之子。他的出生伴随着一个古老预言——他将成为伟大的国王，或成为伟大的觉者。净饭王倾尽全力为儿子营造了完美的世俗生活，希望他永远不必面对人间的苦痛。然而，这份精心的遮蔽本身，反而成为觉醒的催化剂。</p>
+        <p>二十九岁那年，悉达多先后四次出城，见到了老人、病人、死人和一位安详的出家沙门。前三种遭遇令他震惊——原来衰老、疾病与死亡是每个人的宿命；而沙门的宁静则给了他一线希望——也许有一种超越苦的道路。当夜，他告别妻儿，削去须发，踏上了寻求解脱的旅程。</p>
+        <p>此后的六年，悉达多先后拜访了当时最著名的两位禅定导师阿罗逻·迦罗摩和优陀罗·罗摩子，很快便达到了他们教授的最高禅定境界——无所有处定与非想非非想处定。但他发现，深妙的禅定仍非究竟，出定之后，烦恼依然存在。于是他离开了两位老师，转向苦行。在优楼频螺的森林中，他日食一麦，骨瘦如柴，险些丧命。六年后他领悟到：极端的苦行如同琴弦过紧，无法奏出正音；唯有中道，方能通向觉悟。</p>
+        <h2 class="bio__heading">禅法：四念处</h2>
+        <p>悟道后，释迦牟尼系统教授了"四念处"——身念处、受念处、心念处、法念处，即对身体、感受、心识和法则的如实觉知。这是正念最原始、最核心的修行框架。在《念处经》（Satipaṭṭhāna Sutta）中，他详细指导了从呼吸觉知到身体不净观、从受类观察到心性觉察、再到法义思惟的完整修习路径。他强调，四念处是"使众生清净、超越忧悲苦恼、体证涅槃的唯一道路"。</p>
+        <p>他的教学方法极具开放性——不依赖信仰或仪式，而是邀请每个人亲自验证："如人试金，以火试之，非以信受。"他鼓励弟子质疑，亲自实践，以觉知本身作为唯一的权威。这种实证精神，正是正念在两千五百年后仍具有生命力的根本原因。</p>
+        <h2 class="bio__heading">代表作</h2>
+        <ul class="bio__works">
+          <li>《念处经》（Satipaṭṭhāna Sutta）——四念处修行的根本经典</li>
+          <li>《安般守意经》（Ānāpānasati Sutta）——呼吸正念的完整指南</li>
+          <li>《大念处经》（Mahāsatipaṭṭhāna Sutta）——四念处与四圣谛的详尽开示</li>
+        </ul>
+        <h2 class="bio__heading">影响</h2>
+        <p>释迦牟尼的教导在身后数百年间经三次结集得以保存，随阿育王的弘法使团传遍南亚与东南亚。上座部佛教将四念处视为修行的核心路径，时至今日，缅甸、斯里兰卡、泰国的禅修中心仍以《念处经》为主要教材。二十世纪以来，"内观"（Vipassanā）运动将这一古老修行方法带回全球视野，MBSR、MBCT 等现代正念疗法均可追溯至释迦牟尼最初教授的四念处体系。他并非一个要求信仰的神，而是一位指路者——指向每个人都可以亲自走上的觉知之路。</p>
+        <blockquote class="bio__quote">"自己是自己的依止，此外还能有谁作为依止呢？"</blockquote>
+      </div>
+      <div class="bio__nav">
+        <span></span>
+        <a href="#nhat-hanh" class="bio__nav-link bio__nav-link--next">
+          一行禅师
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2. 一行禅师 -->
+<div class="view" id="view-nhat-hanh">
+  <div class="bio-view">
+    <div class="bio">
+      <a href="index.html#figures" class="bio__back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        返回正念导师
+      </a>
+      <div class="bio__header">
+        <div class="bio__avatar bio__avatar--2">一行</div>
+        <div class="bio__identity">
+          <h1 class="bio__name">一行禅师</h1>
+          <p class="bio__subtitle">正念西传的桥梁 · "正念步行"倡导者 · 入世佛教先驱</p>
+          <span class="bio__era-badge">1926 — 2022</span>
+        </div>
+      </div>
+      <div class="bio__body">
+        <p>一行禅师，俗名阮春宝，1926年生于越南顺化。十六岁出家于慈孝寺，法号"一行"，取"一行三昧"之意——在每一个行动中安住当下。这个名字预示了他一生的使命：将禅修从禅堂带入生活的每一个瞬间。</p>
+        <p>1961年，一行禅师赴美国普林斯顿大学研习比较宗教，随后在哥伦比亚大学任教。1963年越南政局剧变，他毅然回国投身和平运动。1966年，他再次赴美呼吁停战，与马丁·路德·金会面。金博士深受触动，于1967年公开提名他为诺贝尔和平奖候选人，称其为"和平的使徒"。因为反战立场，他被南北越双方同时放逐，流亡长达三十九年。</p>
+        <p>流亡期间，他在法国创立了"梅村"（Plum Village）禅修中心，成为西方最具影响力的正念修行道场之一。他创造了"入世佛教"（Engaged Buddhism）的概念，主张修行不是逃避世间苦难，而是以正念深入其中，回应社会不公与生态危机。他组织了"青年社会服务学校"，在战火中重建被炸毁的村庄；他发起了"檀香林"救援计划，帮助越战中的船民。他的修行从未远离人间的苦——正念对他而言不是安适的冥想，而是面对苦难时的清醒与温柔。</p>
+        <h2 class="bio__heading">禅法：正念日常化</h2>
+        <p>一行禅师最独特的贡献，是将正念从禅修坐垫带入日常生活的每一个动作。他教授"正念步行"——每一步都是归家的旅程，左脚触地时默念"我到了"，右脚触地时默念"我到家了"。他教授"正念饮食"——一口面包中看见阳光、雨露、农人的辛劳与大地的承载。他创造了"听钟法"——每当钟声响起，无论手头正在做什么，都停下来三次呼吸，回到当下。这些方法看似简单，却深刻地改变了西方人对禅修的认知：正念不是出世的苦修，而是在世间的觉醒。</p>
+        <p>他还系统教授了"五项正念修习"——不杀生、不偷盗、不邪淫、不妄语、不饮酒的当代诠释版，将传统戒律转化为面向现代人的生活方式指南，涵盖了生态保护、消费伦理、深度倾听等当代议题。</p>
+        <h2 class="bio__heading">代表作</h2>
+        <ul class="bio__works">
+          <li>《正念的奇迹》（The Miracle of Mindfulness, 1975）——正念入门经典，影响数百万读者</li>
+          <li>《步步安乐》（Peace Is Every Step, 1991）——正念日常化的实践指南</li>
+          <li>《活的佛陀，活的基督》（Living Buddha, Living Christ, 1995）——跨宗教对话的里程碑</li>
+          <li>《恐惧：了悟恐惧的真相》（Fear: Essential Wisdom for Getting Through the Storm, 2012）</li>
+        </ul>
+        <h2 class="bio__heading">影响</h2>
+        <p>一行禅师一生著书超过一百本，被翻译为四十余种语言。梅村每年接待来自全球的上万名修行者，他的"正念步行"和"听钟法"成为西方正念社区最普及的修行方法之一。他将佛教从"宗教"语境带入"生活方式"语境，直接影响了乔·卡巴金创立 MBSR 时的理念框架。他对深度倾听、正念消费、生态正念的倡导，也深刻塑造了当代"正念运动"的社会面向。2018年他回到越南顺化慈孝寺，于2022年1月22日在此圆寂，归来了他出发的地方。</p>
+        <blockquote class="bio__quote">"和平不在远方，和平在每一步中。如果你无法在行走中找到和平，你将永远无法抵达它。"</blockquote>
+      </div>
+      <div class="bio__nav">
+        <a href="#shakyamuni" class="bio__nav-link bio__nav-link--prev">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          释迦牟尼
+        </a>
+        <a href="#kabat-zinn" class="bio__nav-link bio__nav-link--next">
+          乔·卡巴金
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 3. 乔·卡巴金 -->
+<div class="view" id="view-kabat-zinn">
+  <div class="bio-view">
+    <div class="bio">
+      <a href="index.html#figures" class="bio__back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        返回正念导师
+      </a>
+      <div class="bio__header">
+        <div class="bio__avatar bio__avatar--3">K</div>
+        <div class="bio__identity">
+          <h1 class="bio__name">乔·卡巴金</h1>
+          <p class="bio__subtitle">MBSR 创始人 · 正念临床化先驱 · 麻省大学医学院荣退教授</p>
+          <span class="bio__era-badge">1944 —</span>
+        </div>
+      </div>
+      <div class="bio__body">
+        <p>乔·卡巴金（Jon Kabat-Zinn），1944年生于纽约，父亲是生物学家，母亲是画家。他在麻省理工学院获分子生物学博士学位，师从诺贝尔奖得主萨尔瓦多·卢里亚。一个科学家，为何成为将东方禅修引入西方医学的第一人？答案藏在他年轻时的一次偶遇中。</p>
+        <p>1965年，还在麻省理工读研究生的卡巴金偶然参加了禅修导师菲利普·卡普洛（Philip Kapleau）的一次讲座，随后开始修习内观禅修。他被禅修中的觉知体验深深震撼——那不是玄学，而是一种可以精确训练的注意力能力。作为一个科学家，他意识到：如果这种能力可以被系统训练和客观测量，它就应该像药物一样接受科学检验。这个念头，改变了一切。</p>
+        <p>1979年，在麻省大学医学院的一次冥想中，卡巴金突然获得了一个完整的构想：创建一个以正念为核心的减压门诊，用八周结构化课程帮助慢性疼痛患者。他刻意去除了所有佛教术语——不用"禅修"而用"冥想练习"，不用"觉悟"而用"觉察"，不用"苦"而用"压力"。这不是对传统的背叛，而是为了让正念走出宗教的围墙，进入它可以真正帮助更多人的地方。他称之为 MBSR——Mindfulness-Based Stress Reduction，正念减压疗法。</p>
+        <h2 class="bio__heading">禅法：MBSR 正念减压</h2>
+        <p>MBSR 是一个八周结构化课程，每周一次两小时半的团体课程，加一次全天静修。核心练习包括：身体扫描（body scan）——仰卧依次觉知全身各部位；坐姿冥想——觉察呼吸、念头和感受的来去；正念瑜伽——温和的伸展中觉知身体边界；正念步行与进食。课程不教授任何信仰或哲学，只提供一种可以亲身验证的训练方法。卡巴金反复强调：正念不是清空念头，而是"以特定方式、有目的地、在当下、不加评判地注意"。</p>
+        <p>MBSR 的精髓在于"非评判的接纳"。患者被邀请不再与疼痛对抗，而是温柔地觉知它、允许它的存在。这种看似悖论的"转向"，往往带来出人意料的结果——当人不再与体验对抗时，痛苦的强度反而降低了。这与佛教中"苦"源于"抗拒"的洞见遥相呼应。</p>
+        <h2 class="bio__heading">代表作</h2>
+        <ul class="bio__works">
+          <li>《多灾多难的岁月》（Full Catastrophe Living, 1990）——MBSR 课程完整手册，被誉为正念医疗的奠基之作</li>
+          <li>《正念：此刻是一枝花》（Wherever You Go, There You Are, 1994）——面向大众的正念入门书</li>
+          <li>《正念的觉知》（Coming to Our Senses, 2005）——正念与科学、社会、政治的深层关联</li>
+        </ul>
+        <h2 class="bio__heading">影响</h2>
+        <p>MBSR 已在全球超过七百个医疗机构实施，相关研究论文超过四千篇。卡巴金的工作催生了 MBCT（正念认知疗法）、MBCP（正念分娩与育儿）、正念饮食、正念教育等一系列衍生物。2013年《美国医学会杂志》（JAMA）发表的荟萃分析确认了 MBSR 对焦虑和抑郁的显著效果。卡巴金被《时代》杂志评为"正念革命"的核心推动者。他用科学为正念建立了一套共同语言，让医生、心理学家、教育者乃至企业领袖能够不带信仰偏见地使用它。他自己曾说："正念不是佛教的，正念是人类的——就像呼吸不属于任何宗教一样。"</p>
+        <blockquote class="bio__quote">"你无法平息海浪，但你可以学会冲浪。"</blockquote>
+      </div>
+      <div class="bio__nav">
+        <a href="#nhat-hanh" class="bio__nav-link bio__nav-link--prev">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          一行禅师
+        </a>
+        <a href="#buddhaghosa" class="bio__nav-link bio__nav-link--next">
+          觉音论师
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 觉音论师 -->
+<div class="view" id="view-buddhaghosa">
+  <div class="bio-view">
+    <div class="bio">
+      <a href="index.html#figures" class="bio__back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        返回正念导师
+      </a>
+      <div class="bio__header">
+        <div class="bio__avatar bio__avatar--4">觉</div>
+        <div class="bio__identity">
+          <h1 class="bio__name">觉音论师</h1>
+          <p class="bio__subtitle">《清净道论》作者 · 内观理论的系统化者</p>
+          <span class="bio__era-badge">约 5 世纪</span>
+        </div>
+      </div>
+      <div class="bio__body">
+        <p>觉音（Buddhaghosa），意译"佛音"，约生于五世纪印度菩提伽耶附近的婆罗门家庭。关于他的生平，史料有限，大多来自缅甸和斯里兰卡的佛教史传。据《大史》和《庄严结史》记载，他青年时精通吠陀与婆罗门学问，以雄辩著称。一次偶然的辩论中，他遇到一位名叫离婆多的阿罗汉，被其深邃的智慧折服，遂皈依佛门，出家修学。</p>
+        <p>出家后，觉音撰写了《发智论》（Ñāṇodaya），显示出非凡的学养与洞见。他的导师建议他前往斯里兰卡，那里保存着最完整的巴利语三藏注释——僧伽罗语写成的"僧伽罗注"。这些注释传说是佛陀亲传弟子的口传遗存，但因用僧伽罗语书写，在印度本土已难以理解。觉音的使命，是将这些珍贵的注释译回巴利语，使其重新成为整个佛教世界的共同财富。</p>
+        <p>觉音抵达斯里兰卡后，住在大寺派（Mahāvihāra）。僧团对他的能力持审慎态度，要求他先撰写一部禅修手册作为考验。觉音以大寺派传承的教法为纲，融汇三藏及注释精华，写出了佛教史上最伟大的禅修论著——《清净道论》（Visuddhimagga）。僧团阅后大为叹服，遂将全部僧伽罗注交予他翻译。</p>
+        <h2 class="bio__heading">禅法：七清净与四十业处</h2>
+        <p>《清净道论》以"七清净"为修行次第：戒清净、心清净、见清净、度疑清净、道非道知见清净、行知见清净、智见清净。其中"心清净"即禅定修习，是内观的基础；后五种清净构成内观的完整进程，从如实照见到最终解脱。</p>
+        <p>觉音系统整理了四十种禅修所缘（业处），从十遍处、十不净到四梵住、四无色定，涵盖了从初学者到高阶行者的全部路径。尤其重要的是，他对"定"与"慧"的区分——禅定是止息散乱的手段，而非目的；真正的解脱来自"慧"，即对无常、苦、无我的如实知见。这一区分深刻影响了后世所有内观传统：马哈希的标记法、葛印卡的身体扫描、帕奥的观智次第，无不以觉音的七清净为理论骨架。</p>
+        <h2 class="bio__heading">代表作</h2>
+        <ul class="bio__works">
+          <li>《清净道论》（Visuddhimagga）——南传佛教禅修百科全书，被称为"佛教的《神学大全》"</li>
+          <li>巴利语三藏全部注释的翻译与编撰——《长部注》《中部注》《相应部注》《增支部注》《法句经注》等</li>
+          <li>《殊胜义论》（Atthasālinī）——《法集论》的注释</li>
+        </ul>
+        <h2 class="bio__heading">影响</h2>
+        <p>觉音是南传上座部佛教最重要的论师，其著作至今仍是斯里兰卡、缅甸、泰国、柬埔寨等国佛学院的核心教材。《清净道论》被翻译成英文、中文、日文等多种语言，是全球内观禅修运动的理论基石。他的贡献不仅是保存了古老的注释传统，更是将散见于各经典中的禅修方法整合为一套自洽的修行体系，使后人可以按图索骥地实修。没有觉音的系统化工作，内观禅修在十九世纪末的复兴将缺乏最关键的理论资源。当代几乎所有内观传统的教学框架，都可以追溯到觉音在五世纪书写的这部伟大论著。</p>
+        <blockquote class="bio__quote">"唯有依戒生定，依定发慧，依慧得解脱——这是一切佛陀共通的教导。"</blockquote>
+      </div>
+      <div class="bio__nav">
+        <a href="#kabat-zinn" class="bio__nav-link bio__nav-link--prev">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          乔·卡巴金
+        </a>
+        <a href="#goenka" class="bio__nav-link bio__nav-link--next">
+          S.N. 葛印卡
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 5. S.N. 葛印卡 -->
+<div class="view" id="view-goenka">
+  <div class="bio-view">
+    <div class="bio">
+      <a href="index.html#figures" class="bio__back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        返回正念导师
+      </a>
+      <div class="bio__header">
+        <div class="bio__avatar bio__avatar--5">葛</div>
+        <div class="bio__identity">
+          <h1 class="bio__name">S.N. 葛印卡</h1>
+          <p class="bio__subtitle">内观大众化推动者 · 全球内观中心创办人</p>
+          <span class="bio__era-badge">1924 — 2013</span>
+        </div>
+      </div>
+      <div class="bio__body">
+        <p>萨地亚·纳拉扬·葛印卡（Satya Narayan Goenka），1924年生于缅甸曼德勒一个印度裔商人家庭。他自幼信奉印度教，从未想过自己会与佛教禅修结缘。命运的改变始于他漫长的偏头痛。</p>
+        <p>二十多岁起，葛印卡饱受剧烈偏头痛的折磨，求访各国名医无效，甚至一度对镇痛药成瘾。1955年，在朋友极力推荐下，他半信半疑地参加了乌巴庆老师（Sayagyi U Ba Khin）的十日内观课程。乌巴庆是缅甸政府高级官员，同时也是一位深修内观的在家居士。他一眼看出葛印卡的根器，但葛印卡起初极不耐烦——他无法理解为何要盘坐不动观察呼吸。然而到了课程第四天，当身体上强烈的感受开始流动时，他第一次体验到了不与感受认同的自由。偏头痛在课程结束后并未痊愈，但他获得了面对疼痛的全新方式——不再对抗，而是如实观察。此后他坚持随乌巴庆修习十四年，被指定为内观指导老师。</p>
+        <p>1969年，葛印卡移居印度，开始在祖国教授内观。这在当时是极具争议的——一个在家居士，一个印度裔，教授佛教禅修？但葛印卡坚持将内观呈现为一种普世的修行方法，而非宗教仪式。他反复强调：佛陀教导的不是"佛教"，而是"法"（Dhamma）——自然的法则，任何人都可以修习。课程完全免费，不接受捐款，所有工作人员都是志愿者。这种纯粹性成为葛印卡内观运动最鲜明的标志。</p>
+        <h2 class="bio__heading">禅法：乌巴庆传统的内观</h2>
+        <p>葛印卡教授的内观法源自乌巴庆的传承，核心是"身体扫描"——从头顶到脚底，依次觉知身体每一部位的感受，不挑选、不回避、不评判。这一方法的理论基础是佛陀在《大念处经》中教授的"受随观"：一切感受都是无常的（生起又灭去），而痛苦源于对愉悦感受的执着和对不愉悦感受的排斥。当修行者在身体扫描中亲证了"感受=无常"这一事实，执着与排斥便自然削弱——不是通过意志力，而是通过直接的体验了知。</p>
+        <p>十日课程的结构非常严格：前三天修习安那般那念（呼吸觉知），培养定力；第四天起教授内观，全身扫描；第十天修习慈心观（mettā-bhāvanā），以善愿回向一切众生。全程禁语，禁止阅读、书写、手机，素食过午不食。这种高强度的环境设计，旨在最大程度地切断外缘干扰，让修行者直面自己的心。</p>
+        <h2 class="bio__heading">代表作</h2>
+        <ul class="bio__works">
+          <li>十日内观课程开示（已出版为《内观》一书）——课程的完整文字版</li>
+          <li>《死后之事》（The Gracious Flow of Dharma）——内观法要的开示集</li>
+          <li>《法的精髓》（The Discourse Summaries）——课程要义精编</li>
+          <li>《内观：生活的艺术》（Vipassana Meditation: The Art of Living）——面向大众的入门介绍</li>
+        </ul>
+        <h2 class="bio__heading">影响</h2>
+        <p>葛印卡在全球建立了超过两百个内观中心，遍布五大洲九十多个国家。每年约十万人参加十日课程，累计已有超过百万人修习。1997年，他将内观带入印度提哈尔监狱，这是全球最大的监狱内观项目，十年后监狱暴力事件下降逾25%，成为联合国推广的矫正项目。他坚持课程完全免费的传统，确保任何人——无论贫富——都可以修习。2000年，他在联合国千年世界和平峰会上发表演讲，向全世界呼吁：内在的和平是外在和平的基础。葛印卡于2013年在印度孟买家中安详辞世，他留下的不仅是一个全球性的禅修网络，更是一个信念：法的本质是普世的，它不属于任何宗教、任何民族，它属于每一个渴望解脱的心。</p>
+        <blockquote class="bio__quote">"不要因为我说了什么而相信，也不要因为经典上写了什么而相信。只有当你亲自体验到了，它才成为你的真理。"</blockquote>
+      </div>
+      <div class="bio__nav">
+        <a href="#buddhaghosa" class="bio__nav-link bio__nav-link--prev">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          觉音论师
+        </a>
+        <a href="#mahasi" class="bio__nav-link bio__nav-link--next">
+          马哈希西亚多
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 6. 马哈希西亚多 -->
+<div class="view" id="view-mahasi">
+  <div class="bio-view">
+    <div class="bio">
+      <a href="index.html#figures" class="bio__back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        返回正念导师
+      </a>
+      <div class="bio__header">
+        <div class="bio__avatar bio__avatar--6">马</div>
+        <div class="bio__identity">
+          <h1 class="bio__name">马哈希西亚多</h1>
+          <p class="bio__subtitle">标记内观法创始人 · 缅甸内观复兴核心人物</p>
+          <span class="bio__era-badge">1904 — 1982</span>
+        </div>
+      </div>
+      <div class="bio__body">
+        <p>马哈希西亚多（Mahāsī Sayādaw），俗名乌·梭班（U Sobhana），1904年生于缅甸雪布镇附近的小村谢昆。他的父亲是一位朴实的农民，母亲是虔诚的佛教徒。十一岁时，他在村寺出家为沙弥，展现出超凡的记忆力与学习能力——二十岁时已通过巴利语考试，受具足戒成为比丘。此后的十余年，他深入研习巴利三藏与注释，在经教领域打下深厚基础。但经教的学问并未令他满足，他渴望亲身验证经典所述的修行体验。</p>
+        <p>1931年，乌·梭班前往明贡西亚多（Mingun Sayādaw）座下修习内观。明贡西亚多是缅甸内观复兴运动的重要人物，教授的是以腹部起伏为所缘的观照方法。乌·梭班在明贡西亚多指导下精进修行，很快证得了深层的观智。明贡西亚多认可了他的修证与教学能力，嘱托他回乡弘法。1938年，他回到谢昆村，在马哈希寺住持，开始了长达四十余年的内观教学生涯。"马哈希西亚多"的尊称即来自这座寺庙——"马哈希"意为"大鼓"，象征法音远播。</p>
+        <p>1949年，缅甸总理乌努邀请马哈希西亚多到仰光主持新成立的"教法禅修中心"（Sāsana Yeikthā）。此后三十年间，这里成为缅甸最大的内观禅修中心之一，每年有数万人在此修习。马哈希西亚多也作为缅甸佛教的代表，多次出席国际佛教会议，将内观法传授到斯里兰卡、泰国、印度尼西亚、日本和西方各国。</p>
+        <h2 class="bio__heading">禅法：标记内观法</h2>
+        <p>马哈希内观法的核心特色是"标记"（noting）。修行者以腹部起伏为基本所缘——腹部膨胀时内心标记"起"，腹部收缩时标记"伏"。当其他现象——疼痛、念头、声音、情绪——闯入觉知时，修行者暂时放下腹部起伏，以简短的内心标签如实标记："痛、痛"、"想、想"、"听、听"、"怕、怕"。标记之后，回到腹部起伏。这一方法看似简单，实则精妙：标签将修行者从"陷入"体验转为"观察"体验，从"我就是痛"转为"我观察到痛"，创造了一丝宝贵的觉知空间。</p>
+        <p>马哈希特别强调"如实"——不修改、不添加、不诠释，只如实标记当下正在发生的一切。他常以一面镜子为喻：镜子映照一切，但不评判、不偏好、不执取。标记法的另一个优势是"精确性"——它迫使修行者以极细的粒度觉知身心的刹那生灭，而非笼统地"感到平静"或"觉得烦躁"。随着修行的深入，标记逐渐从概念性的标签过渡到直接的了知——不再需要词语，觉知本身成为最精准的"标记"。</p>
+        <h2 class="bio__heading">代表作</h2>
+        <ul class="bio__works">
+          <li>《内观禅修手册》（Practical Insight Meditation）——标记内观法的完整修习指南</li>
+          <li>《清净道论大疏钞》（Visuddhimagga Mahāṭīkā 缅文译注）——以禅修实修视角注解觉音论师的经典</li>
+          <li>《念处内观禅修法》（Satipaṭṭhāna Vipassanā Meditation）——四念处与标记法的系统阐述</li>
+          <li>《进步与证悟》（The Progress of Insight）——观智次第的详细描述</li>
+        </ul>
+        <h2 class="bio__heading">影响</h2>
+        <p>马哈希西亚多是二十世纪缅甸内观复兴运动最重要的推动者之一。他主持的教法禅修中心在缅甸境内设立了三百余个分支中心。他的弟子将标记内观法传播至全球，在斯里兰卡、美国、英国、澳大利亚、日本等地建立了数十个禅修中心。1979年，他应美国邀请率团赴美弘法，这是缅甸内观传统首次大规模进入西方。他的教学方法因结构清晰、可操作性强，成为西方正念社区最广泛修习的内观体系之一——甚至卡巴金在创立 MBSR 时，也借鉴了标记法中"以简洁词语锚定觉知"的理念。马哈希于1982年在仰光圆寂，但他的方法仍在每一声"起、伏"中延续。</p>
+        <blockquote class="bio__quote">"如实观照，如实现见。不要期待什么，不要排斥什么——只是看。"</blockquote>
+      </div>
+      <div class="bio__nav">
+        <a href="#goenka" class="bio__nav-link bio__nav-link--prev">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          S.N. 葛印卡
+        </a>
+        <span></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ Footer ═══════════ -->
+<footer class="footer">
+  <p><a href="index.html">返回首页</a> &nbsp;·&nbsp; 正念文化 · 觉察之道 &nbsp;·&nbsp; 以正念照亮每一个当下</p>
+</footer>
+
+<!-- ═══════════ Hash Router ═══════════ -->
+<script>
+(function() {
+  'use strict';
+
+  // Teacher order for prev/next navigation
+  var order = ['shakyamuni', 'nhat-hanh', 'kabat-zinn', 'buddhaghosa', 'goenka', 'mahasi'];
+
+  function route() {
+    var hash = location.hash.slice(1); // remove #
+    var allViews = document.querySelectorAll('.view');
+
+    if (!hash) {
+      // No hash — default to first teacher
+      allViews.forEach(function(v) { v.classList.remove('active'); });
+      var first = document.getElementById('view-shakyamuni');
+      if (first) first.classList.add('active');
+      document.title = '释迦牟尼 · 正念导师传记';
+    } else if (order.indexOf(hash) !== -1) {
+      // Detail view
+      allViews.forEach(function(v) { v.classList.remove('active'); });
+      var target = document.getElementById('view-' + hash);
+      if (target) {
+        target.classList.add('active');
+        // Update page title
+        var name = target.querySelector('.bio__name');
+        if (name) document.title = name.textContent + ' · 正念导师传记';
+      }
+      window.scrollTo(0, 0);
+    }
+  }
+
+  // Initial route
+  route();
+
+  // Listen for hash changes
+  window.addEventListener('hashchange', route);
+
+  // Nav hide/show on scroll
+  var lastScroll = 0;
+  var nav = document.querySelector('.nav');
+
+  window.addEventListener('scroll', function() {
+    var current = window.scrollY;
+    if (current > lastScroll && current > 200) {
+      nav.style.transform = 'translateY(-100%)';
+    } else {
+      nav.style.transform = 'translateY(0)';
+    }
+    lastScroll = current;
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
